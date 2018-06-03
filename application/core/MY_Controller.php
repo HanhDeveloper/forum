@@ -10,14 +10,27 @@ class MY_Controller extends MX_Controller
         parent::__construct();
     }
 
-    protected function set_title($title)
+    protected function title($the_title)
     {
-        $this->data['title'] = $title;
+        $this->data['title'] = $the_title;
     }
 
-    protected function set_data($data = array())
+    protected function set($data)
     {
-        $this->data = array_merge($this->data, $data);
+        if (is_array($data)) {
+            $this->data = array_merge($this->data, $data);
+        } else if (is_string($data)) {
+            if (func_num_args() === 2)
+                $this->data[$data] = func_get_arg(1);
+        }
+    }
+
+    protected function refresh()
+    {
+        if (!function_exists('redirect'))
+            $this->load->helper('url');
+
+        redirect($this->uri->uri_string());
     }
 
     protected function render($the_view = NULL, $template = 'master')

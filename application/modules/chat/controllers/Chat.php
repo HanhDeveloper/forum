@@ -22,10 +22,10 @@ class Chat extends MY_Controller
                 'time' => time()
             ));
 
-            redirect($this->uri->uri_string());
+            $this->refresh();
         }
 
-        $this->set_title('Chatbox');
+        $this->title('Chatbox');
         $this->render('chat');
     }
 
@@ -35,13 +35,13 @@ class Chat extends MY_Controller
             //$first_id = $this->input->post('first_id');
             $last_id = $this->input->post('last_id');
             $messages = $this->chat->get_all($last_id ? $last_id : 0);
-            $this->set_data(array('success' => true, 'messages' => $messages));
-            $this->render(NULL, 'json');
+            $this->set(array('success' => true, 'messages' => $messages));
+            $this->render();
             return;
         }
 
-        $this->set_data(array('success' => false, 'message' => 'err'));
-        $this->render(NULL, 'json');
+        $this->set(array('success' => false, 'message' => 'err'));
+        $this->render();
     }
 
     public function save_message()
@@ -56,14 +56,14 @@ class Chat extends MY_Controller
                     'time' => time()
                 ));
 
-                $this->set_data(array('success' => true, 'message' => $this->chat->get($msg_id)));
-                $this->render(NULL, 'json');
+                $this->set(array('success' => true, 'message' => $this->chat->get($msg_id)));
+                $this->render();
                 return;
             }
         }
 
-        $this->set_data(array('success' => false, 'message' => 'err'));
-        $this->render(NULL, 'json');
+        $this->set(array('success' => false, 'message' => 'err'));
+        $this->render();
     }
 
     private function check_validation()

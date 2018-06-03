@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2018 at 06:27 PM
+-- Generation Time: Jun 03, 2018 at 08:31 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 5.6.35
 
@@ -91,7 +91,8 @@ INSERT INTO `chats` (`id`, `user_id`, `message`, `time`) VALUES
 (49, 3, 'sdfdsgdsg', 1526837421),
 (50, 3, 'fdsfsdfsd', 1526837423),
 (51, 3, 'dsfsdfsdf', 1526837425),
-(52, 3, 'dsfsdfsdfsfdsaas', 1526837429);
+(52, 3, 'dsfsdfsdfsfdsaas', 1526837429),
+(53, 3, 'dsdasdasdasd', 1528048100);
 
 -- --------------------------------------------------------
 
@@ -144,7 +145,6 @@ CREATE TABLE `forums` (
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `type` varchar(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `refid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `slug` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `is_active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -153,11 +153,30 @@ CREATE TABLE `forums` (
 -- Dumping data for table `forums`
 --
 
-INSERT INTO `forums` (`id`, `name`, `type`, `refid`, `slug`, `description`, `is_active`) VALUES
-(1, 'hanh', 'f', 0, 'hanh', 'hanh', ''),
-(2, 'hanh2', 'm', 1, 'smj3', 'hanh3', '0'),
-(3, 'hanh2', 'm', 1, 'hanh2', 'hanh2', '0'),
-(4, 'hanh', 'f', 0, 'hanh', '', '0');
+INSERT INTO `forums` (`id`, `name`, `type`, `refid`, `description`, `is_active`) VALUES
+(1, 'hanh', 'f', 0, 'hanh', ''),
+(2, 'hanh2', 'm', 1, 'hanh3', '0'),
+(3, 'hanh2', 'm', 1, 'hanh2', '0'),
+(4, 'hanh', 'f', 0, '', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum_threads`
+--
+
+CREATE TABLE `forum_threads` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `forum_id` int(10) UNSIGNED NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `forum_threads`
+--
+
+INSERT INTO `forum_threads` (`id`, `name`, `forum_id`) VALUES
+(1, 'jdfsf', 1);
 
 -- --------------------------------------------------------
 
@@ -186,11 +205,11 @@ INSERT INTO `last_seen` (`id`, `user_id`, `message_id`) VALUES
 --
 
 CREATE TABLE `messages` (
-  `id` int(11) NOT NULL,
-  `from` int(11) NOT NULL,
-  `to` int(11) NOT NULL,
-  `message` text NOT NULL,
-  `is_read` enum('0','1') NOT NULL DEFAULT '0',
+  `id` int(10) NOT NULL,
+  `from` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `to` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `message` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `is_read` enum('0','1') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -200,31 +219,11 @@ CREATE TABLE `messages` (
 
 INSERT INTO `messages` (`id`, `from`, `to`, `message`, `is_read`, `time`) VALUES
 (1, 2, 1, 'sadasdas', '1', '2018-05-12 09:30:33'),
-(2, 2, 1, 'ádsad', '1', '2018-05-12 09:30:34'),
+(2, 2, 1, '?dsad', '1', '2018-05-12 09:30:34'),
 (3, 2, 1, 'sadasdasd', '1', '2018-05-12 09:33:31'),
 (4, 1, 2, 'sadsad', '1', '2018-05-12 09:34:11'),
-(5, 1, 2, 'ádasdsad', '1', '2018-05-12 09:53:52'),
+(5, 1, 2, '?dasdsad', '1', '2018-05-12 09:53:52'),
 (6, 1, 2, 'sadsad', '0', '2018-05-13 08:01:54');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `threads`
---
-
-CREATE TABLE `threads` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `slug` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `forum_id` int(10) UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `threads`
---
-
-INSERT INTO `threads` (`id`, `name`, `slug`, `forum_id`) VALUES
-(1, 'jdfsf', 'dsfdsfds', 1);
 
 -- --------------------------------------------------------
 
@@ -264,11 +263,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `rights`, `fullname`, `sex`, `coin`, `gold`, `vip_exp`, `dayb`, `monthb`, `yearb`, `about`, `city`, `address`, `mobile`, `status`, `datereg`, `ip`, `ip_via_proxy`, `browser`, `total_on_site`, `failed_login`) VALUES
-(3, 'admin', 'hanh1997', 'hanh@gmail.com', 9, 'Hanh     Cho  Dha', '', 1555, 2131232, 0, 2, 5, 1997, 'aboutsadadasd', '', 'Hải Dương', '1235', 'tam trangád\'\'\'\'\'111', 0, 0, 0, '', 0, 0),
-(13, 'admin2', 'hanh1997', 'hanh2@gmail.com', 9, 'Hạnh Chợ Đọ', 'f', 1555, 2131232, 0, 2, 5, 1997, 'aboutsadadasd', '', 'Hải Dương', '1235', 'tam trangád', 0, 0, 0, '', 0, 0),
-(14, 'hanh', 'hanh1997', '', 0, 'hanhhhhh', '?', 0, 0, 0, 0, 0, 0, '', '', '', '', '', 1526840389, 0, 0, 'Chrome', 0, 0),
-(15, 'admin66666', 'hanh1997', '', 0, 'ssssssssssssssss', '?', 0, 0, 0, 0, 0, 0, '', '', '', '', '', 1526842572, 0, 0, 'Chrome', 0, 0),
-(16, 'hanh55', 'hanh1997', '', 0, 'nguyen   va   hanh', '?', 0, 0, 0, 0, 0, 0, '', '', '', '', '', 1526999356, 1270, 1270, 'Chrome', 0, 0);
+(3, 'admin', 'f1beef30d1361fa7dc4b6160eaa942ca', 'hanh@gmail.com', 9, 'Hạnh Chợ Đọ', '?', 1555, 2131232, 0, 2, 5, 1997, 'aboutsadadasd', '', 'Hải Dương', '1235', 'tam trangád\'\'\'\'\'111', 0, 0, 0, '', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -293,6 +288,12 @@ ALTER TABLE `forums`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `forum_threads`
+--
+ALTER TABLE `forum_threads`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `last_seen`
 --
 ALTER TABLE `last_seen`
@@ -303,13 +304,6 @@ ALTER TABLE `last_seen`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `threads`
---
-ALTER TABLE `threads`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexes for table `users`
@@ -326,13 +320,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `chats`
 --
 ALTER TABLE `chats`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `forums`
 --
 ALTER TABLE `forums`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `forum_threads`
+--
+ALTER TABLE `forum_threads`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `last_seen`
@@ -344,19 +344,13 @@ ALTER TABLE `last_seen`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `threads`
---
-ALTER TABLE `threads`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -22,7 +22,7 @@ class Register extends MY_Controller
                 // register a new member
                 $user_id = $this->user->insert(array(
                     'username' => $this->input->post('username'),
-                    'password' => $this->input->post('password'),
+                    'password' => md5($this->input->post('password')),
                     'fullname' => $this->input->post('fullname'),
                     'sex' => $this->input->post('sex'),
                     'about' => $this->input->post('about'),
@@ -35,7 +35,7 @@ class Register extends MY_Controller
 
                 // register success
                 if ($user_id) {
-                    $this->set_data(array(
+                    $this->set(array(
                         'id' => $user_id,
                         'username' => $this->input->post('username'),
                         'password' => $this->input->post('password'),
@@ -47,7 +47,7 @@ class Register extends MY_Controller
             }
         }
 
-        $this->set_title('Đăng ký');
+        $this->title('Đăng ký');
         $this->render('register');
     }
 
@@ -56,7 +56,7 @@ class Register extends MY_Controller
         $this->form_validation->set_rules('username', '', 'trim|required|regex_match[/^[a-zA-Z\d]+$/]|min_length[6]|max_length[32]|is_unique[users.username]');
         $this->form_validation->set_rules('password', '', 'trim|required|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('cf_password', '', 'trim|required|matches[password]');
-        $this->form_validation->set_rules('fullname', '', 'trim|required|regex_match[/^[a-zA-Z\s]+$/]|min_length[8]|max_length[32]');
+        $this->form_validation->set_rules('fullname', '', 'trim|required|min_length[8]|max_length[32]|strip_tags');
         $this->form_validation->set_rules('sex', '', 'trim|required|in_list[?,m,f]');
         return $this->form_validation->run();
     }

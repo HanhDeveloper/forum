@@ -21,7 +21,7 @@ class Login extends MY_Controller
                 // login
                 $user = $this->user->get_by(array(
                     'username' => $this->input->post('username'),
-                    'password' => $this->input->post('password'),
+                    'password' => md5($this->input->post('password')),
                 ));
                 if (!empty($user)) {
                     $this->session->set_userdata('user_id', $user->id);
@@ -30,7 +30,7 @@ class Login extends MY_Controller
             }
         }
 
-        $this->set_title('Đăng nhập');
+        $this->title('Đăng nhập');
         $this->render('login');
     }
 

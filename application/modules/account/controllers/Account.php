@@ -21,7 +21,7 @@ class Account extends MY_Controller
             if ($this->check_validation()) {
 
                 // profile updates
-                $this->user->update($user_id, array(
+                $this->user->update_account(array(
                     'status' => $this->input->post('status'),
                     'fullname' => $this->input->post('fullname'),
                     'sex' => $this->input->post('sex'),
@@ -30,26 +30,28 @@ class Account extends MY_Controller
                 ));
 
                 $this->session->set_flashdata('success', 'Thiết lập đã được lưu lại');
-                redirect($this->uri->uri_string());
+                $this->refresh();
+            } else {
+                //$this->session->set_flashdata('success', 'Thiết lập chưa được lưu lại');
+                //redirect($this->uri->uri_string());
             }
         }
-
-        $this->set_title('Thông tin tài khoản');
-        $this->set_data(array('user' => $this->user->get($user_id)));
+        $this->title('Thông tin tài khoản');
+        $this->set('user', $this->user->get($user_id));
         $this->render('account');
     }
 
     public function profile($id, $username)
     {
-        $this->set_title('Trang cá nhân');
-        $this->set_data(array('user' => $this->user->get($id)));
+        $this->title('Trang cá nhân');
+        $this->set('user', $this->user->get($id));
         $this->render('profile');
     }
 
     private function check_validation()
     {
         $this->form_validation->set_rules('status', '', 'trim|required|max_length[100]|strip_tags');
-        $this->form_validation->set_rules('fullname', '', 'trim|required|regex_match[/^[a-zA-Z\s]+$/]|min_length[8]|max_length[32]');
+        $this->form_validation->set_rules('fullname', '', 'trim|required|min_length[8]|max_length[32]|strip_tags');
         $this->form_validation->set_rules('sex', '', 'trim|required|in_list[?,m,f]');
         $this->form_validation->set_rules('address', '', 'trim|required|max_length[100]|strip_tags');
         $this->form_validation->set_rules('about', '', 'trim|required|max_length[500]|strip_tags');

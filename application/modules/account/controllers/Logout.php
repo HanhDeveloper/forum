@@ -15,7 +15,7 @@ class Logout extends MY_Controller
             redirect();
         }
 
-        $this->set_title('Đăng xuất');
+        $this->title('Đăng xuất');
         $this->render('logout');
     }
 }
