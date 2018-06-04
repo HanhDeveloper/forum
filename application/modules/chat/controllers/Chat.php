@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Chat extends MY_Controller
 {
     public $autoload = array(
-        'model' => array('Chat_' => 'chat')
+        'model' => array('chat_model' => 'chat')
     );
 
     public function __construct()
