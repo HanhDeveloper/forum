@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://cdviet.biz';
+$config['base_url'] = 'http://127.0.0.10:8081/forum/';
 
 /*
 |--------------------------------------------------------------------------
